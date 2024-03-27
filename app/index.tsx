@@ -1,7 +1,83 @@
-import {Text, View} from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useAssets } from "expo-asset";
+import { ResizeMode, Video } from "expo-av";
+import { Link } from "expo-router";
+import { defaultStyles } from "@/constants/Styles";
+import Colors from "@/constants/Colors";
 
 const Page = () => {
-    return <View><Text>Page</Text></View>
-}
+  const [assets] = useAssets([require("@/assets/videos/intro.mp4")]);
+  return (
+    <View style={styles.container}>
+      {assets && (
+        <Video
+          resizeMode={ResizeMode.COVER}
+          source={{ uri: assets[0].uri }}
+          isMuted
+          isLooping
+          shouldPlay
+          style={styles.video}
+        />
+      )}
+      <View style={{ marginTop: 80, padding: 20 }}>
+        <Text style={styles.header}>Ready to change the way you money?</Text>
+      </View>
 
-export default Page
+      <View style={styles.buttons}>
+        <Link
+          href={"/login"}
+          style={[
+            defaultStyles.pillButton,
+            { flex: 1, backgroundColor: Colors.dark },
+          ]}
+          asChild
+        >
+          <TouchableOpacity>
+            <Text style={{ color: "white", fontSize: 22, fontWeight: "500" }}>
+              Log In
+            </Text>
+          </TouchableOpacity>
+        </Link>
+
+        <Link
+          href={"/signup"}
+          style={[
+            defaultStyles.pillButton,
+            { flex: 1, backgroundColor: "#FFF" },
+          ]}
+          asChild
+        >
+          <TouchableOpacity>
+            <Text style={{ fontSize: 22, fontWeight: "500" }}>Sing Up</Text>
+          </TouchableOpacity>
+        </Link>
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "space-between",
+  },
+  video: {
+    width: "100%",
+    height: "100%",
+    position: "absolute",
+  },
+  header: {
+    fontSize: 36,
+    fontWeight: "900",
+    textTransform: "uppercase",
+    color: "white",
+  },
+  buttons: {
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: 20,
+    marginBottom: 60,
+    paddingHorizontal: 20,
+  },
+});
+export default Page;
