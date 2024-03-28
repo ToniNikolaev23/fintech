@@ -5,6 +5,7 @@ import Dropdown from "@/components/Dropdown";
 import { useBalanceStore } from "@/store/balanceStore";
 import { defaultStyles } from "@/constants/Styles";
 import { Ionicons } from "@expo/vector-icons";
+import WidgetList from "@/components/SortableList/WidgetList";
 
 const Page = () => {
   const { balance, runTransaction, transactions, clearTransactions } =
@@ -59,13 +60,15 @@ const Page = () => {
             <View style={{ flex: 1 }}>
               <Text style={{ fontWeight: "500" }}>{transaction.title}</Text>
               <Text style={{ color: Colors.gray, fontSize: 12 }}>
-                {transaction.date.toLocaleDateString()}
+                {transaction.date.toLocaleString()}
               </Text>
             </View>
             <Text>{transaction.amount}$</Text>
           </View>
         ))}
       </View>
+      <Text style={defaultStyles.sectionHeader}>Widgets</Text>
+      <WidgetList />
     </ScrollView>
   );
 };
